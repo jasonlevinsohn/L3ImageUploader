@@ -25,9 +25,9 @@ Our is in ~/Documents/Android-IDE/android-sdk-macosx/
 Be sure to put the tools folder and platform-tools folder in your path:
 We are using Fish so its in config.fish
 
-# Path for building PhoneGap Android apps
-set -x PATH ~/Documents/Android-IDE/android-sdk-macosx/platform-tools $PATH
-set -x PATH ~/Documents/Android-IDE/android-sdk-macosx/tools $PATH
+#### Path for building PhoneGap Android apps
+`set -x PATH ~/Documents/Android-IDE/android-sdk-macosx/platform-tools $PATH`
+`set -x PATH ~/Documents/Android-IDE/android-sdk-macosx/tools $PATH`
 
 Run the Android SDK Tools, by running the executable ‘android’ in the tools folder of the package.
 Check the packages needed:
