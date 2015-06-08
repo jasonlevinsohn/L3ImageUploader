@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('l3.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
 
