@@ -4,3 +4,7 @@
 node_modules/
 platforms/
 plugins/
+
+# Sublime Text Files
+L3PictureUploader.sublime-project
+L3PictureUploader.sublime-workspace

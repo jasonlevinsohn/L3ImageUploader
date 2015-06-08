@@ -21,3 +21,13 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+$light: red;
+$stable: blue;
+$button-stable-border: red;
+
+.bar {
+	&.bar-stable {
+		border: 1px solid red;
+	}
+}
+
