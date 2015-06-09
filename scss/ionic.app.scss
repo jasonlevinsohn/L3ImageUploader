@@ -15,13 +15,16 @@ $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
 
+$balanced: #61df9c !default;
+$font-family-sans-serif: "Arial";
+
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
+
+// Overriding variables needs to be before this include of ionic.  This works
+// because all of ionics variables have a !default option associated with them.
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
-$light: red;
-$stable: blue;
-$button-stable-border: red;
-
+// Any overriding styles will be after this import

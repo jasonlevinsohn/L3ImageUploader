@@ -1,30 +1,20 @@
 <ion-view view-title="Upload Images">
   <ion-content class="padding">
-    <div class="list card">
-      <div class="item item-divider">Recent Updates</div>
-      <div class="item item-body">
-        <div>
-          There is a fire in <b>sector 3</b>
-        </div>
+    <div class="list">
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Title</span>
+        <input type="text" placeholder="Title">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Description</span>
+        <input type="text" placeholder="Description">
+      </label>
+      <div class="item item-input-inset">
+        <button class="button button-balanced select-pictures">Select Pictures</button>
+        <span class="progress">Upload Progress: </span>
       </div>
     </div>
-    <div class="list card">
-      <div class="item item-divider">Health</div>
-      <div class="item item-body">
-        <div>
-          You ate an apple today!
-        </div>
-      </div>
-    </div>
-    <div class="list card">
-      <div class="item item-divider">upcoming</div>
-      <div class="item item-body">
-        <div>
-          you have <b>29</b> meetings on your calendar tomorrow.
-        </div>
-      </div>
-    </div>
-    <div class="button-bar">
+   <div class="button-bar">
       <button class="button button-stable">Cancel</button>
       <button class="button button-calm">Upload</button>
     </div>

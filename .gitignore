@@ -5,6 +5,9 @@ node_modules/
 platforms/
 plugins/
 
+www/css/ionic.app.css
+www/css/ionic.app.min.css
+
 # Sublime Text Files
 L3PictureUploader.sublime-project
 L3PictureUploader.sublime-workspace
