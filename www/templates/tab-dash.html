@@ -10,15 +10,19 @@
         <input type="text" placeholder="Description">
       </label>
       <div class="item item-input-inset">
-        <button class="button button-balanced select-pictures">Select Pictures</button>
-        <span class="progress">Upload Progress: </span>
+        <button
+          class="button button-balanced select-pictures"
+          ng-click="dash.getPictures()">
+            Select Pictures
+        </button>
+        <span ng-if="dash.uploading" class="progress">Upload Progress: </span>
       </div>
     </div>
    <div class="button-bar">
       <button class="button button-stable">Cancel</button>
-      <button class="button button-calm">Upload</button>
+      <button
+          class="button button-calm"
+          ng-click="dash.uploadPictures()">Upload</button>
     </div>
-
-
    </ion-content>
 </ion-view>

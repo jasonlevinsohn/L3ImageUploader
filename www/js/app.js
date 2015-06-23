@@ -43,7 +43,7 @@ angular.module('l3', ['ionic', 'l3.controllers', 'l3.services', 'ngCordova'])
     views: {
       'tab-dash': {
         templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
+        controller: 'DashCtrl as dash'
       }
     }
   })
