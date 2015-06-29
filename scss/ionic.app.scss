@@ -28,3 +28,28 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 @import "www/lib/ionic/scss/ionic";
 
 // Any overriding styles will be after this import
+
+.image-wrapper {
+    position: relative;
+    margin-top: 10px;
+
+    .left-side, .right-side {
+        display: inline-block;
+    }
+
+    .left-side {
+        margin-right: 30px;
+
+        img {
+            max-height: 150px;
+            max-width: 150px;
+        }
+    }
+
+    .right-side {
+        padding-top: 10px;
+        position: absolute;
+        height: 100%;
+    }
+
+}

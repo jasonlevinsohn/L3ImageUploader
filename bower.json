@@ -3,5 +3,9 @@
   "private": "true",
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.0.0"
+  },
+  "dependencies": {
+    "lodash": "~3.9.3",
+    "moment": "~2.10.3"
   }
 }

@@ -1,27 +1,63 @@
 <ion-view view-title="Upload Images">
   <ion-content class="padding">
     <div class="list">
-      <label class="item item-input item-floating-label">
-        <span class="input-label">Title</span>
-        <input type="text" placeholder="Title">
-      </label>
-      <label class="item item-input item-floating-label">
-        <span class="input-label">Description</span>
-        <input type="text" placeholder="Description">
-      </label>
       <div class="item item-input-inset">
         <button
           class="button button-balanced select-pictures"
           ng-click="dash.getPictures()">
             Select Pictures
         </button>
+        <button
+          class="button button-balanced select-pictures"
+          ng-click="dash.functionTest()">
+            Test Button
+        </button>
+
         <span ng-if="dash.uploading" class="progress">Upload Progress: </span>
       </div>
+      <label class="item item-input item-select" ng-if="dash.monthSelect.length > 0">
+          <div class="input-label">
+              Month
+          </div>
+          <select
+              ng-model="dash.selectedMonth"
+              ng-options="month.displayMonth for month in dash.monthSelect">
+              <option value="" disabled>Select a Month</option>
+          </select>
+      </label>
+    </div>
+    <div class="list">
+        <div class="image-item" ng-repeat="file in dash.filesToUpload">
+            <label class="item item-input item-floating-label">
+              <span class="input-label">Title</span>
+              <input
+                ng-model="file.title"
+                type="text"
+                placeholder="Title">
+            </label>
+            <label class="item item-input item-floating-label">
+              <span class="input-label">Description</span>
+              <input
+                ng-model="file.desc"
+                type="text"
+                placeholder="Description">
+            </label>
+            <div class="image-wrapper">
+                <div class="left-side">
+                    <img ng-src="{{ file.file }}" alt="">
+                </div>
+                <div class="right-side">
+                    File Size: 
+                    <span class="file-size"></span>
+                </div>
+            </div>
+        </div>
     </div>
    <div class="button-bar">
       <button class="button button-stable">Cancel</button>
       <button
           class="button button-calm"
+          ng-disabled="dash.uploadDisabled"
           ng-click="dash.uploadPictures()">Upload</button>
     </div>
    </ion-content>

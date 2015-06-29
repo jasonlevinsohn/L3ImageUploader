@@ -1,5 +1,38 @@
 angular.module('l3.services', [])
 
+.factory('Slideshow', function($q, $http) {
+
+    var getMonthList = function() {
+        var monthListP = $q.defer();
+            
+        $http.get('http://localhost:8000/api/monthlist/')
+        // monthListP = $http.get('http://www.llamasontheloose.com/api/monthlist/');
+        .then(function(success) {
+            var monthList = [];
+                
+            _.each(success.data, function(data) {
+                monthList.push(data.fields);
+
+            });
+            console.log('The Month List: ');
+            console.log(monthList);
+            monthListP.resolve(monthList);
+
+
+        }, function(reject) {
+            monthListP.reject('Error getting Month List: ' + reject);
+        });
+
+        return monthListP.promise;
+
+    };
+
+    return {
+        getMonthList: getMonthList
+    };
+
+})
+
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 

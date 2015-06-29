@@ -7674,3 +7674,18 @@ a.button {
   opacity: 0;
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
+
+.image-wrapper {
+  position: relative;
+  margin-top: 10px; }
+  .image-wrapper .left-side, .image-wrapper .right-side {
+    display: inline-block; }
+  .image-wrapper .left-side {
+    margin-right: 30px; }
+    .image-wrapper .left-side img {
+      max-height: 150px;
+      max-width: 150px; }
+  .image-wrapper .right-side {
+    padding-top: 10px;
+    position: absolute;
+    height: 100%; }
