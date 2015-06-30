@@ -44,11 +44,12 @@
             </label>
             <div class="image-wrapper">
                 <div class="left-side">
-                    <img ng-src="{{ file.file }}" alt="">
+                    <img style="border:1px solid #000; height: 100px; width: 100px;" ng-src="{{ file.file }}" alt="">
                 </div>
-                <div class="right-side">
+                <div class="right-side"
+                     style="background-image: {{ file.file }}">
                     File Size: 
-                    <span class="file-size"></span>
+                    <span class="file-size">{{ file.file }}</span>
                 </div>
             </div>
         </div>

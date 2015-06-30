@@ -1,7 +1,7 @@
 angular.module('l3.controllers', ['ngCordova'])
 
-.controller('DashCtrl', function($log, $ionicPlatform, $cordovaImagePicker,
-    $cordovaFileTransfer, Slideshow) {
+.controller('DashCtrl', function($scope, $log, $ionicPlatform, $cordovaImagePicker,
+    $cordovaFileTransfer, $cordovaFile, Slideshow) {
     var self = this,
         currentPicturesList = [],
         currentFileSize;
@@ -84,6 +84,66 @@ angular.module('l3.controllers', ['ngCordova'])
 
     };
 
+    var onCopySuccess = function(fileEntry) {
+        console.log('Copy File Success: ');
+        console.dir(fileEntry);
+        $scope.$apply(function() {
+            self.filesToUpload.push({
+                file: fileEntry.nativeURL
+            });
+
+        });
+    };
+
+    var processLocalFile2 = function(fileSystem2) {
+
+    };
+
+    var processLocalFile = function(localFile) {
+        // console.log('The Local File: ');
+        // console.dir(localFile);
+        var fullPathFile = localFile.fullPath;
+        var name = localFile.fullPath.substr(localFile.fullPath.lastIndexOf('/') + 1);
+
+        console.log('Keys:');
+        console.log(_.keys(localFile));
+
+        console.log('Tutorials Name: ');
+        console.log(name);
+
+        window.resolveLocalFileSystemURL(
+                cordova.file.dataDirectory,
+                function(fileSystem2) {
+                    console.log('File System 2: ');
+                    console.dir(fileSystem2);
+
+                    localFile.copyTo(fileSystem2, name, onCopySuccess, fileProcessError);
+                },
+                fileProcessError);
+
+        // localFile.file(function(obj) {
+            // console.log('File: ');
+            // console.dir(obj);
+
+            // $scope.$apply(function() {
+            //     self.filesToUpload.push({
+            //         name: obj.name,
+            //         file: fullPathFile,
+            //         lastModified: obj.lastModifiedDate,
+            //         size: obj.size
+            //     });
+            // });
+
+            // console.log('Files To Upload:');
+            // console.dir(self.filesToUpload);
+        // });
+
+    };
+
+    var fileProcessError = function(error) {
+        $log.error('Error Processing Local File: ', error.code);
+    };
+
     var getPictures = function() {
         var options;
 
@@ -103,13 +163,13 @@ angular.module('l3.controllers', ['ngCordova'])
                 for (var i = 0; i < results.length; i++) {
                     console.log('ImageURI');
                     console.log(results[i]);
-                    self.filesToUpload.push({
-                        'file': results[i],
-                    });
+
+                    window.resolveLocalFileSystemURL(
+                            results[i],
+                            processLocalFile,
+                            fileProcessError);
+
                 }
-
-                currentPicturesList = results;
-
             });
 
         });
