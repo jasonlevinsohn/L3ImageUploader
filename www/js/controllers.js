@@ -21,6 +21,7 @@ angular.module('l3.controllers', ['ngCordova'])
         // Scoped Functions
         self.getPictures = getPictures;
         self.uploadPictures = uploadPictures;
+        self.clearPictures = clearPictures;
         self.functionTest = functionTest;
 
         populateMonthDropdown();
@@ -39,6 +40,10 @@ angular.module('l3.controllers', ['ngCordova'])
         //     }
         // ];
 
+    };
+
+    var clearPictures = function() {
+        self.filesToUpload = [];
     };
 
     var functionTest = function() {
@@ -84,42 +89,11 @@ angular.module('l3.controllers', ['ngCordova'])
 
     };
 
-    var onCopySuccess = function(fileEntry) {
-        console.log('Copy File Success: ');
-        console.dir(fileEntry);
-        $scope.$apply(function() {
-            self.filesToUpload.push({
-                file: fileEntry.nativeURL
-            });
-
-        });
-    };
-
-    var processLocalFile2 = function(fileSystem2) {
-
-    };
-
     var processLocalFile = function(localFile) {
-        console.log('The Local File: ');
-        console.dir(localFile);
-        var fullPathFile = localFile.fullPath;
-        var name = localFile.fullPath.substr(localFile.fullPath.lastIndexOf('/') + 1);
+
         var nativeURL = localFile.nativeURL;
 
-
-        // window.resolveLocalFileSystemURL(
-        //         cordova.file.dataDirectory,
-        //         function(fileSystem2) {
-        //             console.log('File System 2: ');
-        //             console.dir(fileSystem2);
-
-        //             localFile.copyTo(fileSystem2, name, onCopySuccess, fileProcessError);
-        //         },
-        //         fileProcessError);
-
         localFile.file(function(obj) {
-            console.log('File: ');
-            console.dir(obj);
 
             $scope.$apply(function() {
                 self.filesToUpload.push({
@@ -129,11 +103,7 @@ angular.module('l3.controllers', ['ngCordova'])
                     size: intScalar(obj.size)
                 });
             });
-
-            console.log('Files To Upload:');
-            console.dir(self.filesToUpload);
         });
-
     };
 
     var fileProcessError = function(error) {
@@ -146,8 +116,8 @@ angular.module('l3.controllers', ['ngCordova'])
 
         options = {
             maximumImageCount: 10,
-            width: 800,
-            height: 800,
+            // width: 800,
+            // height: 800,
             quality: 50
         };
 
@@ -157,8 +127,6 @@ angular.module('l3.controllers', ['ngCordova'])
                 self.uploadDisabled = false;
 
                 for (var i = 0; i < results.length; i++) {
-                    console.log('ImageURI');
-                    console.log(results[i]);
 
                     window.resolveLocalFileSystemURL(
                             results[i],
@@ -183,7 +151,7 @@ angular.module('l3.controllers', ['ngCordova'])
 
         if (currentPicturesList.length > 0) {
 
-        currentImage = currentPicturesList.shift();
+        currentImage = self.filesToUpload.shift();
         console.log("Current Image being uploaded: " + currentImage);
         fileName = currentImage.split('/').pop();
         console.log("Image file name: " + fileName);
