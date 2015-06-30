@@ -100,43 +100,39 @@ angular.module('l3.controllers', ['ngCordova'])
     };
 
     var processLocalFile = function(localFile) {
-        // console.log('The Local File: ');
-        // console.dir(localFile);
+        console.log('The Local File: ');
+        console.dir(localFile);
         var fullPathFile = localFile.fullPath;
         var name = localFile.fullPath.substr(localFile.fullPath.lastIndexOf('/') + 1);
+        var nativeURL = localFile.nativeURL;
 
-        console.log('Keys:');
-        console.log(_.keys(localFile));
 
-        console.log('Tutorials Name: ');
-        console.log(name);
+        // window.resolveLocalFileSystemURL(
+        //         cordova.file.dataDirectory,
+        //         function(fileSystem2) {
+        //             console.log('File System 2: ');
+        //             console.dir(fileSystem2);
 
-        window.resolveLocalFileSystemURL(
-                cordova.file.dataDirectory,
-                function(fileSystem2) {
-                    console.log('File System 2: ');
-                    console.dir(fileSystem2);
+        //             localFile.copyTo(fileSystem2, name, onCopySuccess, fileProcessError);
+        //         },
+        //         fileProcessError);
 
-                    localFile.copyTo(fileSystem2, name, onCopySuccess, fileProcessError);
-                },
-                fileProcessError);
+        localFile.file(function(obj) {
+            console.log('File: ');
+            console.dir(obj);
 
-        // localFile.file(function(obj) {
-            // console.log('File: ');
-            // console.dir(obj);
+            $scope.$apply(function() {
+                self.filesToUpload.push({
+                    name: obj.name,
+                    file: nativeURL,
+                    lastModified: obj.lastModifiedDate,
+                    size: intScalar(obj.size)
+                });
+            });
 
-            // $scope.$apply(function() {
-            //     self.filesToUpload.push({
-            //         name: obj.name,
-            //         file: fullPathFile,
-            //         lastModified: obj.lastModifiedDate,
-            //         size: obj.size
-            //     });
-            // });
-
-            // console.log('Files To Upload:');
-            // console.dir(self.filesToUpload);
-        // });
+            console.log('Files To Upload:');
+            console.dir(self.filesToUpload);
+        });
 
     };
 
@@ -225,6 +221,23 @@ angular.module('l3.controllers', ['ngCordova'])
     };
 
     init();
+
+    // Takes a number(file Size) and pretty prints it.
+    function intScalar(raw) {
+    	formatted = "";
+    	
+    	if(raw > 999999) {
+    		mod = (raw / 1000000).toFixed(2);
+    		formatted = mod + "MB";
+    	} else if(raw > 999) {
+    		mod = (raw / 1000).toFixed(2);
+    		formatted = mod + "KB";
+    	} else {
+    		formatted = raw.toString();
+        }
+    	
+    	return formatted;
+    }
 
 })
 

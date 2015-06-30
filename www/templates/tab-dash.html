@@ -12,6 +12,12 @@
           ng-click="dash.functionTest()">
             Test Button
         </button>
+        <button
+          class="button button-balanced select-pictures pull-right"
+          ng-click="dash.clearPictures()">
+          Clear
+        </button>
+
 
         <span ng-if="dash.uploading" class="progress">Upload Progress: </span>
       </div>
@@ -49,7 +55,8 @@
                 <div class="right-side"
                      style="background-image: {{ file.file }}">
                     File Size: 
-                    <span class="file-size">{{ file.file }}</span>
+                    <!-- <span class="file-size">{{ file.file }}</span> -->
+                    <span class="file-size">{{ file.size }}</span>
                 </div>
             </div>
         </div>
