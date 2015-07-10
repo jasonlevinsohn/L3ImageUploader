@@ -7688,4 +7688,9 @@ a.button {
   .image-wrapper .right-side {
     padding-top: 10px;
     position: absolute;
-    height: 100%; }
+    height: 100%;
+    width: 100%; }
+
+button.pull-right {
+  position: absolute;
+  right: 10px; }

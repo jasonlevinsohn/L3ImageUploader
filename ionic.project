@@ -1,5 +1,6 @@
 {
-  "name": "l3PictureUploader",
+  /* "name": "l3PictureUploader", */
+  "name": "L3 Picture Uploader",
   "app_id": "",
   "gulpStartupTasks": [
     "sass",

@@ -7,11 +7,11 @@
           ng-click="dash.getPictures()">
             Select Pictures
         </button>
-        <button
-          class="button button-balanced select-pictures"
-          ng-click="dash.functionTest()">
-            Test Button
-        </button>
+        <!-- <button -->
+        <!--   class="button button-balanced select-pictures" -->
+        <!--   ng-click="dash.functionTest()"> -->
+        <!--     Test Button -->
+        <!-- </button> -->
         <button
           class="button button-balanced select-pictures pull-right"
           ng-click="dash.clearPictures()">
@@ -57,7 +57,14 @@
                     File Size: 
                     <!-- <span class="file-size">{{ file.file }}</span> -->
                     <span class="file-size">{{ file.size }}</span>
+                    <div class="display-time">
+                        Created: {{ file.displayDate }}
+                    </div>
+                    <div class="upload-progress" ng-if="file.uploadProgress">
+                        {{ file.uploadProgress }} %
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -65,7 +72,7 @@
       <button class="button button-stable">Cancel</button>
       <button
           class="button button-calm"
-          ng-disabled="dash.uploadDisabled"
+          ng-disabled="dash.selectedMonth === undefined"
           ng-click="dash.uploadPictures()">Upload</button>
     </div>
    </ion-content>

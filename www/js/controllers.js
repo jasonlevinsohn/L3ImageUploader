@@ -14,6 +14,7 @@ angular.module('l3.controllers', ['ngCordova'])
 
         // Scoped Variables
         self.uploading = false;
+        // self.uploadDisabled = true;
         self.uploadDisabled = true;
         self.filesToUpload = [];
         self.monthSelect = [];
@@ -24,19 +25,19 @@ angular.module('l3.controllers', ['ngCordova'])
         self.clearPictures = clearPictures;
         self.functionTest = functionTest;
 
-        populateMonthDropdown();
+        // populateMonthDropdown();
 
         // TEST OBJECT
         // self.filesToUpload = [
         //     {
-        //         'file': '/img/20140513_141052.jpg',
-        //         'title': 'First Title',
-        //         'desc': 'First Description'
+        //         'file': 'img/20140513_141052.jpg',
+        //         // 'title': 'First Title',
+        //         // 'desc': 'First Description'
         //     },
         //     {
-        //         'file': '/img/20140513_141052.jpg',
-        //         'title': 'second title',
-        //         'desc': 'second desc'
+        //         'file': 'img/20140513_141052.jpg',
+        //         // 'title': 'second title',
+        //         // 'desc': 'second desc'
         //     }
         // ];
 
@@ -71,22 +72,36 @@ angular.module('l3.controllers', ['ngCordova'])
 
             _.each(months, function(m) {
                 if (m.slideshow_id < 500) {
-                    m.displayMonth = m.month + ' ' + m.year;
+                    m.displayMonth = m.month.cap() + ' ' + m.year;
                 } else {
-                    m.displayMonth = m.month;
+                    m.displayMonth = m.month.cap();
                 }
 
-                // Capitalize the first letter
-                m.displayMonth.cap();
             });
-
-            console.log('Months: ', months[months.length - 1]);
 
             self.monthSelect = months;
 
+        }, function(error) {
+            console.log('Error Getting Month List: ');
+            console.dir(error);
         });
 
 
+    };
+
+    var parseDate = function(dateString) {
+        var datePart, year, month, day;
+
+        datePart = dateString.split('_')[0];
+        year = datePart.substr(0, 4);
+        month = datePart.substr(4, 2);
+        day = datePart.substr(6, 2);
+
+        return moment()
+            .year(parseInt(year))
+            .month(parseInt(month) - 1)
+            .date(parseInt(day));
+         
     };
 
     var processLocalFile = function(localFile) {
@@ -94,12 +109,14 @@ angular.module('l3.controllers', ['ngCordova'])
         var nativeURL = localFile.nativeURL;
 
         localFile.file(function(obj) {
+            console.log('Object:', obj);
 
             $scope.$apply(function() {
                 self.filesToUpload.push({
                     name: obj.name,
                     file: nativeURL,
-                    lastModified: obj.lastModifiedDate,
+                    displayDate: parseDate(obj.name).format('MMM D \'YY'),
+                    lastModified: parseDate(obj.name),
                     size: intScalar(obj.size)
                 });
             });
@@ -134,6 +151,8 @@ angular.module('l3.controllers', ['ngCordova'])
                             fileProcessError);
 
                 }
+
+                populateMonthDropdown();
             });
 
         });
@@ -149,11 +168,13 @@ angular.module('l3.controllers', ['ngCordova'])
             options = {};
 
 
-        if (currentPicturesList.length > 0) {
+        if (self.filesToUpload.length > 0) {
 
-        currentImage = self.filesToUpload.shift();
-        console.log("Current Image being uploaded: " + currentImage);
-        fileName = currentImage.split('/').pop();
+        // currentImage = self.filesToUpload.shift();
+        currentImage = self.filesToUpload[self.filesToUpload.length - 1];
+        console.log("Current Image being uploaded: ");
+        console.dir(currentImage);
+        fileName = currentImage.file.split('/').pop();
         console.log("Image file name: " + fileName);
 
         options = {
@@ -162,7 +183,12 @@ angular.module('l3.controllers', ['ngCordova'])
             chunkedMode: false,
             mimeType: 'image/jpg',
             params: {
-            'myName': 'this is the files name'
+                title: currentImage.title,
+                desc: currentImage.desc,
+                slideshow_id: self.selectedMonth.slideshow_id,
+                modified_date: currentImage.lastModified,
+                picture_location: self.selectedMonth.month + self.selectedMonth.year + '/' + currentImage.name,
+                folder_name: self.selectedMonth.month + self.selectedMonth.year
             }
         };
 
@@ -172,16 +198,20 @@ angular.module('l3.controllers', ['ngCordova'])
         $cordovaFileTransfer.upload(
             // "http://192.168.1.136:8000/api/uploadimage/",
             // "http://10.253.30.219:8000/api/uploadimage/",
-            "http://192.168.43.76:8000/api/uploadimage/",
-            currentImage,
+            // "http://192.168.43.76:8000/api/uploadimage/",
+            "http://llamasontheloosefarm.com/api/uploadimage/",
+            currentImage.file,
             options)
             .then(function(success) {
-            console.log('Success: ');
-            console.log(JSON.stringify(success));
-            uploadPictures();
+                console.log('Success: ');
+                console.log(JSON.stringify(success));
+                self.filesToUpload.shift();
+                uploadPictures();
             }, function(fail) {
-            console.log('Epic fail:');
-            console.dir(fail);
+                console.log('Epic fail:');
+                console.dir(fail);
+            }, function(progress) {
+                currentImage.uploadProgress = Math.floor((progress.loaded / progress.total) * 100);
             });
 
 

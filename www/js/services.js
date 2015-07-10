@@ -5,8 +5,21 @@ angular.module('l3.services', [])
     var getMonthList = function() {
         var monthListP = $q.defer();
             
-        $http.get('http://localhost:8000/api/monthlist/')
-        // monthListP = $http.get('http://www.llamasontheloose.com/api/monthlist/');
+        var headers = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, GET'
+        };
+
+        // $http.get('http://localhost:8000/api/monthlist/')
+        // $http({
+        //     // headers: headers,
+        //     method: 'JSONP',
+        //     url: 'http://www.llamasontheloosefarm.com/api/monthlist/'
+        // })
+        $http.get('http://llamasontheloosefarm.com/api/monthlist/')
+        // $http.get('http://192.168.43.76:8000/api/monthlist/')
+        // $http.get('http://10.253.30.219:8000/api/monthlist/')
+        // $http.get('http://192.168.1.136:8000/api/monthlist/')
         .then(function(success) {
             var monthList = [];
                 
@@ -20,7 +33,7 @@ angular.module('l3.services', [])
 
 
         }, function(reject) {
-            monthListP.reject('Error getting Month List: ' + reject);
+            monthListP.reject(reject);
         });
 
         return monthListP.promise;

@@ -23,7 +23,7 @@ angular.module('l3', ['ionic', 'l3.controllers', 'l3.services', 'ngCordova'])
 
 .config(function($stateProvider, $urlRouterProvider, $compileProvider) {
 
-  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https|file|blob|cdvfile):|data:image\//);
+  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(http|file|blob|cdvfile):|data:image\//);
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
